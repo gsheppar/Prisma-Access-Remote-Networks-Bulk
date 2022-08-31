@@ -25,10 +25,20 @@ except ImportError:
     CLIENT_SECRET = None
 
 def create_remote_networks(list_from_csv, token):
-    
+    bandwidth = sase_get_bandwidth_allocations(token)
     for network in list_from_csv:
         
         print("\nWorking on " + network["remote_network_name"] + "\n")
+        
+        bandwdith_check = False
+        for region in bandwidth:
+            if network["region"] in bandwidth:
+                bandwdith_check = True
+                break
+        
+        if bandwdith_check:
+            print("Sorry you have no bandwidth configured in region " + network["region"])
+            continue 
         
         if not ike_gateway(network, token):
             print("\nSkipping " + network["remote_network_name"] + " due to an error\n")
@@ -142,17 +152,17 @@ def go():
     # Begin Script, parse arguments.
     ############################################################################
     token = prisma_access_auth(TSG_ID, CLIENT_ID, CLIENT_SECRET)
-    sase_get_bandwidth_allocations(token)    
-    try:
-        with open("remote_networks.csv", "r") as csvfile:
-            csvreader = DictReader(csvfile)
-            list_from_csv = []
-            for row in csvreader:
-                list_from_csv.append(row)
-    except:
-        print("Error importing CSV")
-        return
-    create_remote_networks(list_from_csv, token)
+    if token:
+        try:
+            with open("remote_networks.csv", "r") as csvfile:
+                csvreader = DictReader(csvfile)
+                list_from_csv = []
+                for row in csvreader:
+                    list_from_csv.append(row)
+        except:
+            print("Error importing CSV")
+            return
+        create_remote_networks(list_from_csv, token)
     return
 
 if __name__ == "__main__":
