@@ -1,0 +1,2 @@
+remote_network_name,region,spn_name,ike_crypto_profile,ipsec_crypto_profile,pre_shared_key,local_fqdn,peer_fqdn,tunnel_monitor,monitor_ip,static_enabled,static_routing,bgp_enabled,bgp_peer_as,bgp_peer_ip,bgp_local_ip
+API-Remote-Network,us-east-1,us-east-ash,Viptela-IKE-default,Viptela-IPSec-default,ThisIsMyKey2022,local@example.com,peer@example.com,TRUE,192.168.101.2,TRUE,192.168.100.0/24,TRUE,64512,192.168.101.2,192.168.101.1
