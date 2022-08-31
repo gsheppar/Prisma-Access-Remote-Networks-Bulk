@@ -19,6 +19,8 @@ MIT
  
  - ./remote-networks.py
  
+ This script does not commit the changes. That must be done from the portal. 
+ 
 ### Caveats and known issues:
  - This is a PREVIEW release, hiccups to be expected. Please file issues on Github for any problems.
  - This does not support ECMP
