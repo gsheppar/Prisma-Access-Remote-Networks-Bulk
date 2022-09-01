@@ -2,6 +2,7 @@
 import prisma_settings
 import csv
 from csv import DictReader
+import argparse
 from files.pa_api_calls import *
 
 
@@ -151,10 +152,23 @@ def go():
     ############################################################################
     # Begin Script, parse arguments.
     ############################################################################
+    parser = argparse.ArgumentParser(description="{0}.".format(SCRIPT_NAME))
+    
+    config_group = parser.add_argument_group('Config', 'These options enable config options')
+    config_group.add_argument("--file", "-F", help="Remote Networks File", type=str, default=None)
+    
+    args = vars(parser.parse_args())
+    
+    config_csv = args['file']
+    
+    if not config_csv:
+        print("Please include a Remote Networks File arguement with -F (example: ./remote-networks.py -F remote_networks.csv)")
+        return
+    
     token = prisma_access_auth(TSG_ID, CLIENT_ID, CLIENT_SECRET)
     if token:
         try:
-            with open("remote_networks.csv", "r") as csvfile:
+            with open(config_csv, "r") as csvfile:
                 csvreader = DictReader(csvfile)
                 list_from_csv = []
                 for row in csvreader:
