@@ -17,7 +17,7 @@ MIT
  Please generate your TSG ID, Client ID and Client Secret then add them to prisma_settings.py file
  Please update the remote_networks.csv with all the Remote Networks you want to build 
  
- - ./remote-networks.py
+ - ./remote-networks.py -F remote_networks.csv 
  
  This script does not commit the changes. That must be done from the portal. 
  
